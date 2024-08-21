@@ -1,6 +1,6 @@
 {
   "name": "react-native-asset-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "open source package to automatize React Native asset generation on Android and IOS",
   "main": "index.js",
   "scripts": {
