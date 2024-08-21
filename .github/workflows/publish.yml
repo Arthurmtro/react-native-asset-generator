@@ -45,8 +45,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes to GitHub
-        env:
-          GIT_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           git config --global user.email "arthurmtro@gmail.com"
