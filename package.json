@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/Arthurmtro/react-native-asset-generator.git"
   },
-  "publishConfig": {
-    "@arthurmtro:registry": "https://npm.pkg.github.com"
-  },
   "scripts": {
     "build": "tsc",
     "start": "ts-node src/index.ts",
