@@ -14,8 +14,16 @@ import {
 
 export class Generator {
   private readonly sharp: Sharp;
+  private readonly projectPath: string;
 
-  constructor(readonly inputPath: string, private readonly outputDir: string) {
+  constructor({
+    inputPath,
+    projectPath,
+  }: {
+    inputPath: string;
+    projectPath: string;
+  }) {
+    this.projectPath = projectPath;
     this.sharp = sharpModule(inputPath);
   }
 
@@ -31,7 +39,8 @@ export class Generator {
     for (const size of Object.values(ANDROID_SIZES)) {
       const dimensions = ANDROID_FORMAT_TO_SIZE[size];
       const dirPath = path.join(
-        this.outputDir,
+        this.projectPath,
+        "android/app/src/main/res",
         ANDROID_FORMAT_TO_FILE_NAME[size]
       );
 
@@ -45,7 +54,7 @@ export class Generator {
   }
 
   public async generateIOS() {
-    const iosOutputDir = path.join(this.outputDir, "AppIcon.appiconset");
+    const iosOutputDir = path.join(this.projectPath, "AppIcon.appiconset");
     if (!fs.existsSync(iosOutputDir)) {
       fs.mkdirSync(iosOutputDir, { recursive: true });
     }

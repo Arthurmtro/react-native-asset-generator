@@ -6,12 +6,12 @@ const program = new Command();
 program
   .version("1.0.0")
   .description("React native assets Generator")
-  .option("-i, --input <file>", "Input image file")
-  .option("-o, --output <dir>", "Output directory")
+  .option("-i, --inputPath <file>", "Input image file")
+  .option("-o, --projectPath <dir>", "Output directory")
   .action(async (options) => {
-    const { input, output } = options;
+    const { inputPath, projectPath } = options;
 
-    const generator = new Generator(input, output);
+    const generator = new Generator({ inputPath, projectPath });
     await generator.generate();
   });
 

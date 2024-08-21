@@ -14,34 +14,33 @@ import {
 } from "../src/ios.types";
 
 describe("Icon Generator", () => {
-  const inputImage = path.join(__dirname, "..", "test", "input", "input.webp");
-  const outputDir = path.join(__dirname, "..", "test", "output");
+  const inputPath = path.join(__dirname, "..", "test", "input", "input.webp");
+  const projectPath = path.join(__dirname, "..", "test", "output");
 
   beforeAll(() => {
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+    if (!fs.existsSync(projectPath)) {
+      fs.mkdirSync(projectPath, { recursive: true });
     }
   });
 
   afterEach(() => {
-    fs.rmSync(outputDir, { recursive: true, force: true });
+    fs.rmSync(projectPath, { recursive: true, force: true });
   });
 
   it("should generate all Android assets with the correct dimensions and paths", async () => {
-    const generator = new Generator(inputImage, outputDir);
+    const generator = new Generator({ inputPath, projectPath });
     await generator.generateAndroid();
 
     for (const size of Object.values(ANDROID_SIZES)) {
       const outputPath = path.join(
-        outputDir,
+        projectPath,
+        "android/app/src/main/res",
         ANDROID_FORMAT_TO_FILE_NAME[size],
         "ic_launcher.png"
       );
 
       // Check if the file was created
       expect(fs.existsSync(outputPath)).toBe(true);
-
-      console.log("outputPath :>> ", outputPath);
 
       // Verify the file dimensions
       const { width, height } = await sharp(outputPath).metadata();
@@ -51,12 +50,12 @@ describe("Icon Generator", () => {
   });
 
   it("should generate all iOS assets with the correct dimensions and paths", async () => {
-    const generator = new Generator(inputImage, outputDir);
+    const generator = new Generator({ inputPath, projectPath });
     await generator.generateIOS();
 
     for (const size of Object.values(IOS_SIZES)) {
       const outputPath = path.join(
-        outputDir,
+        projectPath,
         "AppIcon.appiconset",
         IOS_FORMAT_TO_FILE_NAME[size]
       );

@@ -21,3 +21,7 @@ export const ANDROID_FORMAT_TO_FILE_NAME: Record<ANDROID_SIZES, string> = {
   [ANDROID_SIZES.XXHDPI]: "mipmap-xxhdpi",
   [ANDROID_SIZES.XXXHDPI]: "mipmap-xxxhdpi",
 };
+
+export const ANDROID_RESOURCES_PATH = "android/app/src/main/res";
+
+// export const
