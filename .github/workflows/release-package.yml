@@ -5,8 +5,7 @@ on:
     inputs:
       version_choice:
         description: "Which type of version bump? (patch, minor, major)"
-        required: true
-        default: "patch"
+        required: false
         type: choice
         options:
           - patch
@@ -14,9 +13,8 @@ on:
           - major
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,17 +30,15 @@ jobs:
 
       - name: Run tests
         run: npm test
-
+  bump:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.version_choice != ''
+    steps:
       - name: Bump version
         id: bump_version
         run: |
           npm version ${{ github.event.inputs.version_choice }} --no-git-tag-version
           echo "::set-output name=new_version::$(node -p -e "require('./package.json').version")"
-
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes to GitHub
         run: |
@@ -52,3 +48,16 @@ jobs:
           git add .
           git commit -m "Version bump to ${{ steps.bump_version.outputs.new_version }}"
           git push origin HEAD:master --follow-tags
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to GitHub Packages
+        run: npm publish --registry=https://npm.pkg.github.com/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to NPM
+        run: npm publish --registry=https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
