@@ -1,7 +1,3 @@
-Here's a README file for your project:
-
----
-
 # React Native Icon Generator
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
