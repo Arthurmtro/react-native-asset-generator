@@ -1,8 +1,15 @@
 {
-  "name": "react-native-asset-generator",
+  "name": "@arthurmtro/react-native-asset-generator",
   "version": "1.0.8",
   "description": "open source package to automatize React Native asset generation on Android and IOS",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Arthurmtro/react-native-asset-generator.git"
+  },
+  "publishConfig": {
+    "@arthurmtro:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "build": "tsc",
     "start": "ts-node src/index.ts",
