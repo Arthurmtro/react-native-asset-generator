@@ -36,7 +36,7 @@ jobs:
       - name: Bump version
         id: bump_version
         run: |
-          npm version ${{ github.event.inputs.version_choice }}
+          npm version ${{ github.event.inputs.version_choice }} --no-git-tag-version
           echo "::set-output name=new_version::$(node -p -e "require('./package.json').version")"
 
       - name: Publish to NPM
