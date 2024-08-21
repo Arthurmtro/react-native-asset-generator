@@ -20,11 +20,14 @@
   - Allow users to specify custom output directories for generated Android and iOS assets.
 - **Support for Android Rounded Icons:**
   - Option to generate Android rounded icons for devices that support adaptive icons.
-- IF ASKED **Custom Asset Sizes:**
+
+### 🤔 Why not Features
+
+- **Custom Asset Sizes:**
   - Enable users to specify custom dimensions or add additional sizes beyond the default set.
-- IF ASKED **Web Platform Support:**
+- **Web Platform Support:**
   - Extend the generator to create assets for web applications (e.g., favicons, manifest icons).
-- IF ASKED **Generate Splash Screens:**
+- **Generate Splash Screens:**
   - Add support for generating splash screen assets for both Android and iOS platforms.
 
 ## Installation
