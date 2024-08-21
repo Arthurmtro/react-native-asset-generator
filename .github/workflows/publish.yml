@@ -46,7 +46,9 @@ jobs:
 
       - name: Push changes to GitHub
         run: |
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           git config --global user.email "arthurmtro@gmail.com"
           git config --global user.name "arthurmtro"
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
+          git add .
+          git commit -m "Version bump to ${{ steps.bump_version.outputs.new_version }}"
           git push origin HEAD:master --follow-tags
