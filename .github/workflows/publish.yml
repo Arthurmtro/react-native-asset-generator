@@ -48,7 +48,7 @@ jobs:
         env:
           GIT_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           git config --global user.email "arthurmtro@gmail.com"
           git config --global user.name "arthurmtro"
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin HEAD:master --follow-tags
