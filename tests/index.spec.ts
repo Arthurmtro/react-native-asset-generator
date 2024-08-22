@@ -7,15 +7,13 @@ import {
   ANDROID_FORMAT_TO_SIZE,
   ANDROID_SIZES,
 } from "../src/android.types";
-import {
-  IOS_SIZES,
-  IOS_FORMAT_TO_FILE_NAME,
-  IOS_FORMAT_TO_SIZE,
-} from "../src/ios.types";
+import { IOS_SIZE_MAP } from "../src/ios.types";
+
+const BACKGROUND_COLOR = "#000000";
 
 describe("Icon Generator", () => {
-  const inputPath = path.join(__dirname, "..", "test", "input", "input.webp");
-  const projectPath = path.join(__dirname, "..", "test", "output");
+  const inputPath = path.join(__dirname, "..", "tests", "input", "input.png");
+  const projectPath = path.join(__dirname, "..", "tests", "output");
 
   beforeAll(() => {
     if (!fs.existsSync(projectPath)) {
@@ -28,7 +26,11 @@ describe("Icon Generator", () => {
   });
 
   it("should generate all Android assets with the correct dimensions and paths", async () => {
-    const generator = new Generator({ inputPath, projectPath });
+    const generator = new Generator({
+      inputPath,
+      projectPath,
+      backgroundColor: BACKGROUND_COLOR,
+    });
     await generator.generateAndroid();
 
     for (const size of Object.values(ANDROID_SIZES)) {
@@ -50,21 +52,25 @@ describe("Icon Generator", () => {
   });
 
   it("should generate all iOS assets with the correct dimensions and paths", async () => {
-    const generator = new Generator({ inputPath, projectPath });
+    const generator = new Generator({
+      inputPath,
+      projectPath,
+      backgroundColor: BACKGROUND_COLOR,
+    });
     await generator.generateIOS();
 
-    for (const size of Object.values(IOS_SIZES)) {
+    for (const size of IOS_SIZE_MAP) {
       const outputPath = path.join(
         projectPath,
-        "AppIcon.appiconset",
-        IOS_FORMAT_TO_FILE_NAME[size]
+        `AppIcon.appiconset/${size.filename}`
       );
 
       expect(fs.existsSync(outputPath)).toBe(true);
 
       const { width, height } = await sharp(outputPath).metadata();
-      expect(width).toBe(IOS_FORMAT_TO_SIZE[size]);
-      expect(height).toBe(IOS_FORMAT_TO_SIZE[size]);
+      const scale = size.scale[0];
+      expect(width).toBe(size.size * parseInt(scale));
+      expect(height).toBe(size.size * parseInt(scale));
     }
   });
 });

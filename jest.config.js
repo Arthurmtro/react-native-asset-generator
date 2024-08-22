@@ -1,5 +1,11 @@
+/** @type {import('ts-jest/dist/types').JestConfigWithTsJest} */
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
+  watchPathIgnorePatterns: [
+    "tests/output/AppIcon.appiconset/Contents.json",
+    "/node_modules/",
+    "/dist/",
+  ],
   testPathIgnorePatterns: ["/dist/", "/node_modules/"],
+  testEnvironment: "node",
+  preset: "ts-jest",
 };
