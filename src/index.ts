@@ -2,9 +2,10 @@ import { Command } from "commander";
 import { Generator, GeneratorOptions } from "./generator";
 
 const program = new Command();
+const version = process.env.npm_package_version ?? "1.0.0";
 
 program
-  .version("1.0.0")
+  .version(version)
   .description("React native assets Generator")
   .option("-i, --inputPath <file>", "Input image file")
   .option("-o, --projectPath <dir>", "Output directory")

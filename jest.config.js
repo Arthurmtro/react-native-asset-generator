@@ -1,7 +1,7 @@
 /** @type {import('ts-jest/dist/types').JestConfigWithTsJest} */
 module.exports = {
   watchPathIgnorePatterns: [
-    "tests/output/AppIcon.appiconset/Contents.json",
+    "tests/output/ios/AppIcon.appiconset/Contents.json",
     "/node_modules/",
     "/dist/",
   ],

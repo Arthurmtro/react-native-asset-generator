@@ -9,20 +9,35 @@ import {
 import { IOS_SIZE_MAP } from "./ios.types";
 
 export interface GeneratorOptions {
-  inputPath: string;
-  projectPath: string;
-  backgroundColor?: string; // Optional background color
+  readonly inputPath: string;
+  readonly projectPath: string;
+
+  readonly backgroundColor?: string;
+  readonly androidPath?: string;
+  readonly iosPath?: string;
 }
 
 export class Generator {
   private readonly sharp: Sharp;
-  private readonly projectPath: string;
   private readonly backgroundColor?: string;
+  private readonly androidPath: string;
+  private readonly iosPath: string;
 
-  constructor({ inputPath, projectPath, backgroundColor }: GeneratorOptions) {
-    this.projectPath = projectPath;
+  constructor({
+    backgroundColor,
+    projectPath,
+    androidPath,
+    inputPath,
+    iosPath,
+  }: GeneratorOptions) {
     this.sharp = sharpModule(inputPath);
+
     this.backgroundColor = backgroundColor;
+    this.androidPath = path.join(
+      projectPath,
+      androidPath ?? "android/app/src/main/res"
+    );
+    this.iosPath = path.join(projectPath, iosPath ?? "ios");
   }
 
   public async generate() {
@@ -37,8 +52,7 @@ export class Generator {
     for (const size of Object.values(ANDROID_SIZES)) {
       const dimensions = ANDROID_FORMAT_TO_SIZE[size];
       const dirPath = path.join(
-        this.projectPath,
-        "android/app/src/main/res",
+        this.androidPath,
         ANDROID_FORMAT_TO_FILE_NAME[size]
       );
 
@@ -51,16 +65,12 @@ export class Generator {
     }
 
     // Play Store Icon (512x512)
-    const playstoreDirPath = path.join(
-      this.projectPath,
-      "android/app/src/main/res"
-    );
-    if (!fs.existsSync(playstoreDirPath)) {
-      fs.mkdirSync(playstoreDirPath, { recursive: true });
+    if (!fs.existsSync(this.androidPath)) {
+      fs.mkdirSync(this.androidPath, { recursive: true });
     }
 
     const playstoreOutputPath = path.join(
-      playstoreDirPath,
+      this.androidPath,
       "ic_launcher-playstore.png"
     );
     const playstoreDimensions = 512;
@@ -70,8 +80,7 @@ export class Generator {
     for (const size of Object.values(ANDROID_SIZES)) {
       const dimensions = ANDROID_FORMAT_TO_SIZE[size];
       const roundDirPath = path.join(
-        this.projectPath,
-        "android/app/src/main/res",
+        this.androidPath,
         ANDROID_FORMAT_TO_FILE_NAME[size]
       );
 
@@ -85,7 +94,7 @@ export class Generator {
   }
 
   public async generateIOS() {
-    const iosOutputDir = path.join(this.projectPath, "AppIcon.appiconset");
+    const iosOutputDir = path.join(this.iosPath, "AppIcon.appiconset");
     if (!fs.existsSync(iosOutputDir)) {
       fs.mkdirSync(iosOutputDir, { recursive: true });
     }

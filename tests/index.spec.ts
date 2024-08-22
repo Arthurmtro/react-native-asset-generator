@@ -62,7 +62,7 @@ describe("Icon Generator", () => {
     for (const size of IOS_SIZE_MAP) {
       const outputPath = path.join(
         projectPath,
-        `AppIcon.appiconset/${size.filename}`
+        `ios/AppIcon.appiconset/${size.filename}`
       );
 
       expect(fs.existsSync(outputPath)).toBe(true);
