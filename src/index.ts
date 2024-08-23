@@ -7,16 +7,21 @@ const version = process.env.npm_package_version ?? "1.0.0";
 program
   .version(version)
   .description("React native assets Generator")
-  .option("-i, --inputPath <file>", "Input image file")
-  .option("-o, --projectPath <dir>", "Output directory")
-  .option("-b, --backgroundColor <color>", "Background color")
+  .option("-i, --inputPath <file>", "input image file")
+  .option("-o, --projectPath <dir>", "output directory")
+  .option("-b, --backgroundColor <color>", "background color")
+  .option("-android, --androidPath <dir>", "android output directory")
+  .option("-ios, --iosPath <dir>", "iOS output directory")
   .action(async (options: GeneratorOptions) => {
-    const { inputPath, projectPath, backgroundColor } = options;
+    const { inputPath, projectPath, backgroundColor, androidPath, iosPath } =
+      options;
 
     const generator = new Generator({
-      inputPath,
-      projectPath,
       backgroundColor,
+      projectPath,
+      androidPath,
+      inputPath,
+      iosPath,
     });
     await generator.generate();
   });
