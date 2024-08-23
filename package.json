@@ -13,6 +13,9 @@
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
+  "bin": {
+    "react-native-asset-generator": "./src/index.ts"
+  },
   "keywords": [
     "react",
     "native"
