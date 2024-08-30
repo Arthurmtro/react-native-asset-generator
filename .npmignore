@@ -9,6 +9,10 @@ npm-shrinkwrap.json
 
 # codes
 src/
+src/*.ts
+src/**/*.ts
+
+# tests
 test/
 
 # misc
