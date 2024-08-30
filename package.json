@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "prepublish": "tsc",
     "start": "ts-node src/index.ts",
     "test": "jest",
     "test:watch": "jest --watchAll"
