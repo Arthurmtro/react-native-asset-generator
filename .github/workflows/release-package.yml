@@ -55,6 +55,6 @@ jobs:
           git push origin HEAD:master --follow-tags
 
       - name: Publish to NPM
-        run: npm publish --registry=https://registry.npmjs.org/
+        run: npm upload
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

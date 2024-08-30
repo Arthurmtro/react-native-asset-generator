@@ -1,22 +1,22 @@
 {
   "name": "react-native-asset-generator",
-  "version": "1.0.24",
+  "version": "1.0.29",
   "description": "open source package to automatize React Native asset generation on Android and IOS",
-  "main": "dist/src/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/bin.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Arthurmtro/react-native-asset-generator.git"
   },
   "scripts": {
-    "build": "tsc",
-    "prepublish": "tsc",
-    "start": "ts-node src/index.ts",
+    "build": "tsup",
+    "prepublish": "tsup",
+    "start": "ts-node src/bin.ts",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "upload": "tsup && npm publish"
   },
   "bin": {
-    "react-native-asset-generator": "dist/src/index.js"
+    "react-native-asset-generator": "./dist/bin.js"
   },
   "keywords": [
     "react",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "commander": "^12.1.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "tsup": "^8.2.4"
   }
 }

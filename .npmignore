@@ -1,4 +1,5 @@
 .git/
+.github/
 
 # for WebStorm
 .idea/
@@ -14,6 +15,9 @@ src/**/*.ts
 
 # tests
 tests/
+
+jest.config.js
+tsup.config.ts
 
 # misc
 example/
