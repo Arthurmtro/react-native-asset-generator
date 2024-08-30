@@ -3,6 +3,7 @@
   "version": "1.0.20",
   "description": "open source package to automatize React Native asset generation on Android and IOS",
   "main": "dist/src/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/Arthurmtro/react-native-asset-generator.git"
@@ -14,7 +15,7 @@
     "test:watch": "jest --watchAll"
   },
   "bin": {
-    "react-native-asset-generator": "./dist/src/index.js"
+    "react-native-asset-generator": "/src/index.ts"
   },
   "keywords": [
     "react",

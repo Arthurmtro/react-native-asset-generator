@@ -4,6 +4,7 @@
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./",
+    "declaration": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -11,7 +12,8 @@
   },
   "include": ["src/**/*.ts", "tests/**/*.spec.ts"],
   "exclude": [
+    "tests/output/ios/AppIcon.appiconset/Contents.json",
     "node_modules",
-    "tests/output/ios/AppIcon.appiconset/Contents.json"
+    "dist"
   ]
 }
