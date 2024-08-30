@@ -5,5 +5,5 @@ export default defineConfig({
   publicDir: false,
   clean: true,
   minify: true,
-  format: ["cjs"], // 👈 Node
+  format: ["cjs"],
 });
