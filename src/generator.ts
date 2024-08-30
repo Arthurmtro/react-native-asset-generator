@@ -18,10 +18,12 @@ export interface GeneratorOptions {
 }
 
 export class Generator {
-  private readonly sharp: Sharp;
   private readonly backgroundColor?: string;
   private readonly androidPath: string;
+  private readonly inputPath: string;
   private readonly iosPath: string;
+
+  private sharp?: Sharp;
 
   constructor({
     backgroundColor,
@@ -30,14 +32,27 @@ export class Generator {
     inputPath,
     iosPath,
   }: GeneratorOptions) {
-    this.sharp = sharpModule(inputPath);
-
     this.backgroundColor = backgroundColor;
+    this.iosPath = path.join(projectPath, iosPath ?? "ios");
     this.androidPath = path.join(
       projectPath,
       androidPath ?? "android/app/src/main/res"
     );
-    this.iosPath = path.join(projectPath, iosPath ?? "ios");
+    this.inputPath = inputPath;
+  }
+
+  public async initSharp() {
+    const isCloudOrigin = this.inputPath.startsWith("https://");
+    if (!isCloudOrigin) {
+      this.sharp = sharpModule(this.inputPath);
+      return;
+    }
+
+    const response = await fetch(this.inputPath);
+    const blob = await response.blob();
+    const buffer = await blob.arrayBuffer();
+    const source = Buffer.from(buffer);
+    this.sharp = sharpModule(source);
   }
 
   public async generate() {
@@ -135,7 +150,14 @@ export class Generator {
     size: number,
     rounded: boolean = false
   ) {
-    let image = this.sharp.resize(size, size);
+    await this.initSharp();
+
+    let image = this.sharp!.resize({
+      fit: "cover",
+      height: size,
+      width: size,
+      background: this.backgroundColor,
+    });
 
     if (this.backgroundColor) {
       image = image.flatten({ background: this.backgroundColor });
@@ -143,7 +165,7 @@ export class Generator {
 
     if (rounded) {
       // Scale down the image to fit within the circle without being trimmed
-      const scale = 0.8; // Adjust this scale factor as necessary
+      const scale = 1; // Adjust this scale factor as necessary
       const scaledSize = Math.round(size * scale);
 
       // Resize the image with the scaled-down size
